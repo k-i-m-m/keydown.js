@@ -13,7 +13,7 @@ HTML 요소의 `data-kd-sc`와 `data-kd-ac`를 읽어 키보드 `keydown` 이벤
 배포 파일을 HTML에 추가하면 문서가 준비된 뒤 자동으로 키 매핑을 수집하고 실행을 시작합니다.
 
 ```html
-<script src="./dist/keydown.v2.0.0.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/k-i-m-m/keydown.js@v2.0.0/dist/keydown.v2.0.0.js"></script>
 ```
 
 키를 연결할 요소에는 단축키를 `data-kd-sc`로, 실행할 동작을 `data-kd-ac`로 지정합니다. 요소의 기존 `id`는 자유롭게 유지할 수 있습니다.
@@ -31,7 +31,7 @@ HTML 요소의 `data-kd-sc`와 `data-kd-ac`를 읽어 키보드 `keydown` 이벤
   Control + Shift + K
 </button>
 
-<script src="./dist/keydown.v2.0.0.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/k-i-m-m/keydown.js@v2.0.0/dist/keydown.v2.0.0.js"></script>
 ```
 
 ## 속성 작성 규칙
@@ -267,7 +267,7 @@ const controller = window.keydownJS.createKeydown({
   미리보기
 </section>
 
-<script src="./dist/keydown.v2.0.0.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/k-i-m-m/keydown.js@v2.0.0/dist/keydown.v2.0.0.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     window.keydownJS.controller
@@ -371,7 +371,7 @@ The current release is `v2.0.0`.
 Add the distribution file to your HTML. The library automatically collects key mappings and starts after the document is ready.
 
 ```html
-<script src="./dist/keydown.v2.0.0.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/k-i-m-m/keydown.js@v2.0.0/dist/keydown.v2.0.0.js"></script>
 ```
 
 Set the shortcut with `data-kd-sc` and the action with `data-kd-ac`. Existing element IDs remain unrestricted.
@@ -389,7 +389,7 @@ Set the shortcut with `data-kd-sc` and the action with `data-kd-ac`. Existing el
   Control + Shift + K
 </button>
 
-<script src="./dist/keydown.v2.0.0.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/k-i-m-m/keydown.js@v2.0.0/dist/keydown.v2.0.0.js"></script>
 ```
 
 ## Attribute Format
@@ -625,7 +625,7 @@ Register custom actions for project-specific behavior.
   Preview
 </section>
 
-<script src="./dist/keydown.v2.0.0.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/k-i-m-m/keydown.js@v2.0.0/dist/keydown.v2.0.0.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     window.keydownJS.controller

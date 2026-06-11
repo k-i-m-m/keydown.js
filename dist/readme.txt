@@ -13,3 +13,6 @@ data-kd-ac="hide"
 
 Browser script:
 keydown.v2.0.0.js
+
+CDN:
+https://cdn.jsdelivr.net/gh/k-i-m-m/keydown.js@v2.0.0/dist/keydown.v2.0.0.js
