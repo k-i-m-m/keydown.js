@@ -2,60 +2,61 @@
 
 ## 한국어
 
-HTML 요소의 `id`를 읽어 키보드 `keydown` 이벤트를 요소의 동작에 연결하는 작은 브라우저 라이브러리입니다.
+HTML 요소의 `data-kd-sc`와 `data-kd-ac`를 읽어 키보드 `keydown` 이벤트를 요소의 동작에 연결하는 작은 브라우저 라이브러리입니다.
 
 별도의 이벤트 리스너를 반복해서 작성하지 않고, HTML 속성만으로 표시, 숨김, 토글, 클릭 동작을 선언할 수 있습니다.
 
-현재 배포 버전은 `v1.0.4`입니다.
+현재 배포 버전은 `v2.0.0`입니다.
 
 ## 시작하기
 
 배포 파일을 HTML에 추가하면 문서가 준비된 뒤 자동으로 키 매핑을 수집하고 실행을 시작합니다.
 
 ```html
-<script src="./dist/keydown.v1.0.4.js"></script>
+<script src="./dist/keydown.v2.0.0.js"></script>
 ```
 
-키를 연결할 요소의 `id`에는 `kd-` 접두사와 키 이름을 작성하고, `data-kd-action`에는 실행할 동작을 지정합니다.
+키를 연결할 요소에는 단축키를 `data-kd-sc`로, 실행할 동작을 `data-kd-ac`로 지정합니다. 요소의 기존 `id`는 자유롭게 유지할 수 있습니다.
 
 ```html
-<div id="kd-space" data-kd-action="toggle">
+<div id="menu" data-kd-sc="space" data-kd-ac="toggle">
   Space 키로 열고 닫기
 </div>
 
-<div id="kd-esc" data-kd-action="hide">
+<div id="notice" data-kd-sc="esc" data-kd-ac="hide">
   Esc 키로 숨기기
 </div>
 
-<button id="kd-control+shift+k" data-kd-action="click">
+<button id="save" data-kd-sc="control+shift+k" data-kd-ac="click">
   Control + Shift + K
 </button>
 
-<script src="./dist/keydown.v1.0.4.js"></script>
+<script src="./dist/keydown.v2.0.0.js"></script>
 ```
 
-## ID 작성 규칙
+## 속성 작성 규칙
 
 기본 형식은 다음과 같습니다.
 
 ```text
-kd-<키 또는 조합키>
+data-kd-sc="<키 또는 조합키>"
+data-kd-ac="<액션>"
 ```
 
-단일 키는 `kd-space`, `kd-enter`, `kd-a`처럼 작성합니다.
+단일 키는 `space`, `enter`, `a`처럼 작성합니다.
 
 조합 키는 `+`로 연결합니다.
 
 ```html
-<button id="kd-control+s" data-kd-action="click">저장</button>
-<button id="kd-meta+shift+p" data-kd-action="click">명령 실행</button>
+<button data-kd-sc="control+s" data-kd-ac="click">저장</button>
+<button data-kd-sc="meta+shift+p" data-kd-ac="click">명령 실행</button>
 ```
 
-같은 키를 여러 요소에 연결하려면 `--` 뒤에 구분용 라벨을 추가할 수 있습니다. 라벨은 요소의 `id`를 고유하게 구분할 뿐 키 매핑에는 영향을 주지 않습니다.
+같은 키를 여러 요소에 연결할 수 있습니다. 선택적으로 `--` 뒤에 구분용 라벨을 추가할 수 있으며, 라벨은 키 매핑에 영향을 주지 않습니다.
 
 ```html
-<div id="kd-esc--notice" data-kd-action="hide">공지 닫기</div>
-<div id="kd-esc--dialog" data-kd-action="hide">대화상자 닫기</div>
+<div data-kd-sc="esc--notice" data-kd-ac="hide">공지 닫기</div>
+<div data-kd-sc="esc--dialog" data-kd-ac="hide">대화상자 닫기</div>
 ```
 
 같은 키에 연결된 유효한 요소가 여러 개라면 해당 요소의 액션이 모두 실행됩니다.
@@ -67,7 +68,7 @@ kd-<키 또는 조합키>
 요소를 표시합니다. 기본 표시 값은 `block`입니다.
 
 ```html
-<div id="kd-f1" data-kd-action="show">도움말</div>
+<div data-kd-sc="f1" data-kd-ac="show">도움말</div>
 ```
 
 ### `hide`
@@ -75,7 +76,7 @@ kd-<키 또는 조합키>
 요소에 `display: none`을 적용합니다.
 
 ```html
-<div id="kd-esc" data-kd-action="hide">닫을 요소</div>
+<div data-kd-sc="esc" data-kd-ac="hide">닫을 요소</div>
 ```
 
 ### `toggle`
@@ -83,7 +84,7 @@ kd-<키 또는 조합키>
 요소의 표시 상태를 전환합니다.
 
 ```html
-<nav id="kd-control+m" data-kd-action="toggle">메뉴</nav>
+<nav data-kd-sc="control+m" data-kd-ac="toggle">메뉴</nav>
 ```
 
 ### `click`
@@ -91,7 +92,7 @@ kd-<키 또는 조합키>
 키를 누른 시점의 마우스 포인터 위치에 있는 요소에 `click()`을 호출합니다. 포인터 위치를 확인할 수 없는 경우 마지막 포인터 대상 또는 키가 매핑된 요소를 클릭합니다.
 
 ```html
-<button id="kd-enter" data-kd-action="click">실행</button>
+<button data-kd-sc="enter" data-kd-ac="click">실행</button>
 ```
 
 ## 표시 방식 지정
@@ -99,11 +100,11 @@ kd-<키 또는 조합키>
 `show` 또는 `toggle` 액션으로 요소를 표시할 때 `block`이 아닌 다른 `display` 값이 필요하면 `data-kd-display`를 지정합니다.
 
 ```html
-<div id="kd-f2" data-kd-action="toggle" data-kd-display="flex">
+<div data-kd-sc="f2" data-kd-ac="toggle" data-kd-display="flex">
   Flex 레이아웃
 </div>
 
-<div id="kd-f3" data-kd-action="show" data-kd-display="grid">
+<div data-kd-sc="f3" data-kd-ac="show" data-kd-display="grid">
   Grid 레이아웃
 </div>
 ```
@@ -113,8 +114,8 @@ kd-<키 또는 조합키>
 ### 문자와 숫자
 
 ```text
-kd-a ... kd-z
-kd-0 ... kd-9
+a ... z
+0 ... 9
 ```
 
 ### 숫자패드
@@ -122,19 +123,19 @@ kd-0 ... kd-9
 숫자패드 키는 `num-` 접두사를 사용합니다.
 
 ```text
-kd-num-0 ... kd-num-9
-kd-num-enter
-kd-num-add
-kd-num-subtract
-kd-num-multiply
-kd-num-divide
-kd-num-decimal
+num-0 ... num-9
+num-enter
+num-add
+num-subtract
+num-multiply
+num-divide
+num-decimal
 ```
 
 ### Function 키
 
 ```text
-kd-f1 ... kd-f24
+f1 ... f24
 ```
 
 키보드 설정에 따라 Function 키를 사용하기 위해 `Fn`을 함께 눌러야 할 수 있지만, 하드웨어 보조 키인 `Fn` 자체는 매핑하지 않습니다.
@@ -142,10 +143,10 @@ kd-f1 ... kd-f24
 ### 수정 키
 
 ```text
-kd-control
-kd-alt
-kd-shift
-kd-meta
+control
+alt
+shift
+meta
 ```
 
 조합 키의 수정 키 순서는 내부적으로 `control`, `alt`, `shift`, `meta` 순서로 정규화됩니다.
@@ -153,43 +154,43 @@ kd-meta
 ### 공통 키
 
 ```text
-kd-escape
-kd-space
-kd-enter
-kd-backspace
-kd-tab
-kd-capslock
-kd-delete
-kd-insert
-kd-home
-kd-end
-kd-pageup
-kd-pagedown
-kd-arrowup
-kd-arrowdown
-kd-arrowleft
-kd-arrowright
-kd-contextmenu
-kd-printscreen
-kd-scrolllock
-kd-pause
-kd-numlock
+escape
+space
+enter
+backspace
+tab
+capslock
+delete
+insert
+home
+end
+pageup
+pagedown
+arrowup
+arrowdown
+arrowleft
+arrowright
+contextmenu
+printscreen
+scrolllock
+pause
+numlock
 ```
 
 ### 문장부호 키
 
 ```text
-kd-minus
-kd-equal
-kd-bracket-left
-kd-bracket-right
-kd-backslash
-kd-semicolon
-kd-quote
-kd-backquote
-kd-comma
-kd-period
-kd-slash
+minus
+equal
+bracket-left
+bracket-right
+backslash
+semicolon
+quote
+backquote
+comma
+period
+slash
 ```
 
 ## 키 별칭
@@ -262,11 +263,11 @@ const controller = window.keydownJS.createKeydown({
 프로젝트에 필요한 액션을 등록할 수 있습니다.
 
 ```html
-<section id="kd-alt+p" data-kd-action="paint">
+<section data-kd-sc="alt+p" data-kd-ac="paint">
   미리보기
 </section>
 
-<script src="./dist/keydown.v1.0.4.js"></script>
+<script src="./dist/keydown.v2.0.0.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     window.keydownJS.controller
@@ -285,8 +286,8 @@ const controller = window.keydownJS.createKeydown({
 | `element` | 액션이 연결된 HTML 요소 |
 | `event` | 원본 `keydown` 이벤트 |
 | `shortcut` | 정규화된 단축키 |
-| `action` | `data-kd-action`에 지정한 액션 이름 |
-| `label` | `--` 뒤에 작성한 선택적 라벨 |
+| `action` | `data-kd-ac`에 지정한 액션 이름 |
+| `label` | `data-kd-sc`의 `--` 뒤에 작성한 선택적 라벨 |
 | `controller` | 현재 실행 중인 컨트롤러 |
 
 ## 실행 이벤트
@@ -294,7 +295,7 @@ const controller = window.keydownJS.createKeydown({
 액션 실행 뒤 매핑된 요소에서 `keydownjs:trigger` 커스텀 이벤트가 발생합니다.
 
 ```js
-const element = document.querySelector("#kd-space");
+const element = document.querySelector("[data-kd-sc='space']");
 
 element.addEventListener("keydownjs:trigger", ({ detail }) => {
   console.log(detail.shortcut);
@@ -304,7 +305,7 @@ element.addEventListener("keydownjs:trigger", ({ detail }) => {
 
 ## 동적으로 추가한 요소
 
-라이브러리가 시작된 뒤 새로운 매핑 요소를 DOM에 추가하거나 기존 요소의 `id`, `data-kd-action`을 변경했다면 `refresh()`를 호출해 매핑을 다시 수집합니다.
+라이브러리가 시작된 뒤 새로운 매핑 요소를 DOM에 추가하거나 기존 요소의 `data-kd-sc`, `data-kd-ac`을 변경했다면 `refresh()`를 호출해 매핑을 다시 수집합니다.
 
 ```js
 window.keydownJS.controller.refresh();
@@ -323,7 +324,7 @@ window.keydownJS.controller.refresh();
 | `normalizeShortcut(shortcut)` | 조합 키 정규화 |
 | `codeToKey(code, fallbackKey)` | 키보드 코드 변환 |
 | `eventToShortcut(event)` | 키보드 이벤트를 단축키 문자열로 변환 |
-| `parseBindingId(id, action)` | 요소 ID와 액션 파싱 |
+| `parseBinding(shortcut, action)` | 단축키와 액션 파싱 |
 | `KeydownJS` | 컨트롤러 클래스 |
 
 컨트롤러는 다음 메서드를 제공합니다.
@@ -338,10 +339,14 @@ window.keydownJS.controller.refresh();
 ## 배포 파일
 
 ```text
-dist/keydown.v1.0.4.js
+dist/keydown.v2.0.0.js
 ```
 
 배포 파일은 일반 `<script>` 태그로 직접 불러올 수 있으며, 내부 구현 함수명은 배포를 위해 축약되어 있습니다.
+
+## v2 변경 사항
+
+`v2.0.0`부터 요소 `id`가 아닌 `data-kd-sc`와 `data-kd-ac`로 매핑합니다. 기존 `v1.x`의 `id="kd-*"` 문법은 더 이상 매핑되지 않습니다.
 
 ## 라이선스
 
@@ -355,60 +360,61 @@ dist/keydown.v1.0.4.js
 
 ## English
 
-`keydown-id` is a small browser library that reads HTML element IDs and connects keyboard `keydown` events to element actions.
+`keydown-id` is a small browser library that reads `data-kd-sc` and `data-kd-ac` attributes and connects keyboard `keydown` events to element actions.
 
 It lets you declare show, hide, toggle, and click behavior through HTML attributes without repeatedly writing event listeners.
 
-The current release is `v1.0.4`.
+The current release is `v2.0.0`.
 
 ## Getting Started
 
 Add the distribution file to your HTML. The library automatically collects key mappings and starts after the document is ready.
 
 ```html
-<script src="./dist/keydown.v1.0.4.js"></script>
+<script src="./dist/keydown.v2.0.0.js"></script>
 ```
 
-Set an element ID using the `kd-` prefix followed by a key name. Set the action to run with `data-kd-action`.
+Set the shortcut with `data-kd-sc` and the action with `data-kd-ac`. Existing element IDs remain unrestricted.
 
 ```html
-<div id="kd-space" data-kd-action="toggle">
+<div id="menu" data-kd-sc="space" data-kd-ac="toggle">
   Open and close with Space
 </div>
 
-<div id="kd-esc" data-kd-action="hide">
+<div id="notice" data-kd-sc="esc" data-kd-ac="hide">
   Hide with Escape
 </div>
 
-<button id="kd-control+shift+k" data-kd-action="click">
+<button id="save" data-kd-sc="control+shift+k" data-kd-ac="click">
   Control + Shift + K
 </button>
 
-<script src="./dist/keydown.v1.0.4.js"></script>
+<script src="./dist/keydown.v2.0.0.js"></script>
 ```
 
-## ID Format
+## Attribute Format
 
-The basic ID format is:
+The basic attribute format is:
 
 ```text
-kd-<key or key combination>
+data-kd-sc="<key or key combination>"
+data-kd-ac="<action>"
 ```
 
-Write a single key as `kd-space`, `kd-enter`, or `kd-a`.
+Write a single key as `space`, `enter`, or `a`.
 
 Join combination keys with `+`.
 
 ```html
-<button id="kd-control+s" data-kd-action="click">Save</button>
-<button id="kd-meta+shift+p" data-kd-action="click">Run command</button>
+<button data-kd-sc="control+s" data-kd-ac="click">Save</button>
+<button data-kd-sc="meta+shift+p" data-kd-ac="click">Run command</button>
 ```
 
-To map the same key to multiple elements, append an optional label after `--`. The label only keeps element IDs unique and does not affect the keyboard mapping.
+The same key may be mapped to multiple elements. You may append an optional label after `--`; the label does not affect the keyboard mapping.
 
 ```html
-<div id="kd-esc--notice" data-kd-action="hide">Close notice</div>
-<div id="kd-esc--dialog" data-kd-action="hide">Close dialog</div>
+<div data-kd-sc="esc--notice" data-kd-ac="hide">Close notice</div>
+<div data-kd-sc="esc--dialog" data-kd-ac="hide">Close dialog</div>
 ```
 
 When multiple valid elements use the same key, all of their actions run.
@@ -420,7 +426,7 @@ When multiple valid elements use the same key, all of their actions run.
 Shows the element. The default display value is `block`.
 
 ```html
-<div id="kd-f1" data-kd-action="show">Help</div>
+<div data-kd-sc="f1" data-kd-ac="show">Help</div>
 ```
 
 ### `hide`
@@ -428,7 +434,7 @@ Shows the element. The default display value is `block`.
 Applies `display: none` to the element.
 
 ```html
-<div id="kd-esc" data-kd-action="hide">Element to close</div>
+<div data-kd-sc="esc" data-kd-ac="hide">Element to close</div>
 ```
 
 ### `toggle`
@@ -436,7 +442,7 @@ Applies `display: none` to the element.
 Switches the element between visible and hidden states.
 
 ```html
-<nav id="kd-control+m" data-kd-action="toggle">Menu</nav>
+<nav data-kd-sc="control+m" data-kd-ac="toggle">Menu</nav>
 ```
 
 ### `click`
@@ -444,7 +450,7 @@ Switches the element between visible and hidden states.
 Calls `click()` on the element under the current mouse pointer when the key is pressed. If the pointer position cannot be resolved, it clicks the last pointer target or the mapped element.
 
 ```html
-<button id="kd-enter" data-kd-action="click">Run</button>
+<button data-kd-sc="enter" data-kd-ac="click">Run</button>
 ```
 
 ## Display Values
@@ -452,11 +458,11 @@ Calls `click()` on the element under the current mouse pointer when the key is p
 Use `data-kd-display` when a `show` or `toggle` action needs a display value other than `block`.
 
 ```html
-<div id="kd-f2" data-kd-action="toggle" data-kd-display="flex">
+<div data-kd-sc="f2" data-kd-ac="toggle" data-kd-display="flex">
   Flex layout
 </div>
 
-<div id="kd-f3" data-kd-action="show" data-kd-display="grid">
+<div data-kd-sc="f3" data-kd-ac="show" data-kd-display="grid">
   Grid layout
 </div>
 ```
@@ -466,8 +472,8 @@ Use `data-kd-display` when a `show` or `toggle` action needs a display value oth
 ### Letters and Numbers
 
 ```text
-kd-a ... kd-z
-kd-0 ... kd-9
+a ... kd-z
+0 ... kd-9
 ```
 
 ### Numpad
@@ -475,19 +481,19 @@ kd-0 ... kd-9
 Numpad keys use the `num-` prefix.
 
 ```text
-kd-num-0 ... kd-num-9
-kd-num-enter
-kd-num-add
-kd-num-subtract
-kd-num-multiply
-kd-num-divide
-kd-num-decimal
+num-0 ... kd-num-9
+num-enter
+num-add
+num-subtract
+num-multiply
+num-divide
+num-decimal
 ```
 
 ### Function Keys
 
 ```text
-kd-f1 ... kd-f24
+f1 ... kd-f24
 ```
 
 Some keyboards require holding `Fn` to use a Function key. The hardware helper key `Fn` itself is not mapped.
@@ -495,10 +501,10 @@ Some keyboards require holding `Fn` to use a Function key. The hardware helper k
 ### Modifier Keys
 
 ```text
-kd-control
-kd-alt
-kd-shift
-kd-meta
+control
+alt
+shift
+meta
 ```
 
 Modifier keys in combinations are normalized internally in this order: `control`, `alt`, `shift`, `meta`.
@@ -506,43 +512,43 @@ Modifier keys in combinations are normalized internally in this order: `control`
 ### Common Keys
 
 ```text
-kd-escape
-kd-space
-kd-enter
-kd-backspace
-kd-tab
-kd-capslock
-kd-delete
-kd-insert
-kd-home
-kd-end
-kd-pageup
-kd-pagedown
-kd-arrowup
-kd-arrowdown
-kd-arrowleft
-kd-arrowright
-kd-contextmenu
-kd-printscreen
-kd-scrolllock
-kd-pause
-kd-numlock
+escape
+space
+enter
+backspace
+tab
+capslock
+delete
+insert
+home
+end
+pageup
+pagedown
+arrowup
+arrowdown
+arrowleft
+arrowright
+contextmenu
+printscreen
+scrolllock
+pause
+numlock
 ```
 
 ### Punctuation Keys
 
 ```text
-kd-minus
-kd-equal
-kd-bracket-left
-kd-bracket-right
-kd-backslash
-kd-semicolon
-kd-quote
-kd-backquote
-kd-comma
-kd-period
-kd-slash
+minus
+equal
+bracket-left
+bracket-right
+backslash
+semicolon
+quote
+backquote
+comma
+period
+slash
 ```
 
 ## Key Aliases
@@ -615,11 +621,11 @@ const controller = window.keydownJS.createKeydown({
 Register custom actions for project-specific behavior.
 
 ```html
-<section id="kd-alt+p" data-kd-action="paint">
+<section data-kd-sc="alt+p" data-kd-ac="paint">
   Preview
 </section>
 
-<script src="./dist/keydown.v1.0.4.js"></script>
+<script src="./dist/keydown.v2.0.0.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     window.keydownJS.controller
@@ -638,8 +644,8 @@ A custom action handler receives the following context:
 | `element` | The HTML element connected to the action |
 | `event` | The original `keydown` event |
 | `shortcut` | The normalized shortcut |
-| `action` | The action name from `data-kd-action` |
-| `label` | The optional label written after `--` |
+| `action` | The action name from `data-kd-ac` |
+| `label` | The optional label written after `--` in `data-kd-sc` |
 | `controller` | The active controller |
 
 ## Trigger Event
@@ -647,7 +653,7 @@ A custom action handler receives the following context:
 After an action runs, the mapped element dispatches a `keydownjs:trigger` custom event.
 
 ```js
-const element = document.querySelector("#kd-space");
+const element = document.querySelector("[data-kd-sc='space']");
 
 element.addEventListener("keydownjs:trigger", ({ detail }) => {
   console.log(detail.shortcut);
@@ -657,7 +663,7 @@ element.addEventListener("keydownjs:trigger", ({ detail }) => {
 
 ## Dynamically Added Elements
 
-Call `refresh()` after adding a new mapped element or changing an existing element's `id` or `data-kd-action`.
+Call `refresh()` after adding a new mapped element or changing an existing element's `data-kd-sc` or `data-kd-ac`.
 
 ```js
 window.keydownJS.controller.refresh();
@@ -676,7 +682,7 @@ The distribution script exposes `window.keydownJS`.
 | `normalizeShortcut(shortcut)` | Normalizes a key combination |
 | `codeToKey(code, fallbackKey)` | Converts a keyboard code |
 | `eventToShortcut(event)` | Converts a keyboard event into a shortcut string |
-| `parseBindingId(id, action)` | Parses an element ID and action |
+| `parseBinding(shortcut, action)` | Parses a shortcut and action |
 | `KeydownJS` | The controller class |
 
 Controllers provide the following methods:
@@ -691,10 +697,14 @@ Controllers provide the following methods:
 ## Distribution File
 
 ```text
-dist/keydown.v1.0.4.js
+dist/keydown.v2.0.0.js
 ```
 
 The distribution file can be loaded directly with a standard `<script>` tag. Internal implementation function names are shortened for distribution.
+
+## Changes in v2
+
+Starting with `v2.0.0`, mappings use `data-kd-sc` and `data-kd-ac` instead of element IDs. The previous `id="kd-*"` syntax from `v1.x` is no longer mapped.
 
 ## License
 
